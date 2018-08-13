@@ -9,7 +9,8 @@ export class ItemsService {
         'ISBN: 978-2-06-722734-7',
         'Collection: LeGuide Vert'
       ],
-      isAvailable: false
+      isAvailable: false,
+      borrowerName: 'Thomas Sue'
     },
     {
       name: 'Les montagnes hallucinées',
@@ -17,7 +18,8 @@ export class ItemsService {
         'ISBN: 2-290-31905-8',
         'Auteur: HP Lovecraft'
       ],
-      isAvailable: true
+      isAvailable: true,
+      borrowerName: ''
     },
     {
       name: '365 jours de fête',
@@ -25,7 +27,8 @@ export class ItemsService {
         'ISBN: 978-2-01-231249-4',
         'Auteur: Pippa Middleton'
       ],
-      isAvailable: true
+      isAvailable: true,
+      borrowerName: ''
     },
     {
       name: 'Union Européenne et Droit International',
@@ -33,7 +36,8 @@ export class ItemsService {
         'ISBN: 978-2-233-00665-3',
         'Auteurs: Myriam Benlolo-Carabot, Ulas Candas, Eglantine Cujo'
       ],
-      isAvailable: true
+      isAvailable: true,
+      borrowerName: ''
     }
   ];
 
@@ -44,7 +48,8 @@ export class ItemsService {
         'Durée: 2h11',
         'Scénariste: Katsuhiro Ôtomo'
       ],
-      isAvailable: true
+      isAvailable: true,
+      borrowerName: ''
     },
     {
       name: 'Origine',
@@ -52,20 +57,32 @@ export class ItemsService {
         'Durée: 2h30',
         'Réalisateur: Keiichi Sugiyama'
       ],
-      isAvailable: false
+      isAvailable: false,
+      borrowerName: 'Elodie Dupuy'
     }
   ];
 
-  changeStatus(list: string, index: number) {
-    if (list == 'books') {
-      this.bookList[index].isAvailable =
-        ! this.bookList[index].isAvailable;;
-    };
-    if (list == 'disks') {
-      this.diskList[index].isAvailable =
-        ! this.diskList[index].isAvailable;;
-    };
+
+  borrowBook(index: number, borrowerName: string) {
+    this.bookList[index].isAvailable = false;
+    this.bookList[index].borrowerName = borrowerName;
   }
+
+  borrowDisk(index: number, borrowerName: string) {
+    this.diskList[index].isAvailable = false;
+    this.diskList[index].borrowerName = borrowerName;
+  }
+
+  returnBook(index: number) {
+    this.bookList[index].isAvailable = true;
+    this.bookList[index].borrowerName = '';
+  }
+
+  returnDisk(index: number) {
+    this.diskList[index].isAvailable = true;
+    this.diskList[index].borrowerName = '';
+  }
+
 }
 
 // Vous aurez un service qui centralise les données des livres

@@ -16,22 +16,33 @@
       <p *ngFor="let line of book.description">{{line}}</p>
     </ion-card-content>
   </ion-card>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button ion-button
-          full color="primary" [disabled]="!book.isAvailable"
-          (click)="onLend()">
-          Prêter le livre
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button
-          full color="primary" [disabled]="book.isAvailable"
-          (click)="onLend()">
-          Récupérer le livre
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+  <form [formGroup]="lendForm">
+    <ion-item>
+      <ion-label stacked>Nom de l'emprunteur</ion-label>
+      <ion-input type="text" formControlName="borrowerName" [readonly]="!book.isAvailable">
+      </ion-input>
+    </ion-item>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button
+            full color="primary" [disabled]="!book.isAvailable"
+            (click)="onSubmitForm()">
+            Prêter le livre
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button
+            full color="primary" [disabled]="book.isAvailable"
+            (click)="onSubmitForm()">
+            Récupérer le livre
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
 </ion-content>

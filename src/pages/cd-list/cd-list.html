@@ -20,6 +20,9 @@
       <ion-card [ngClass]="{'is-unavailable': !disk.isAvailable}">
         <ion-card-header>{{disk.name}}</ion-card-header>
         <ion-card-content>
+          <span ion-text color="danger" *ngIf="!disk.isAvailable" >
+            <em>emprunté par : {{disk.borrowerName}}</em>
+          </span>
           <p *ngFor="let line of disk.description">{{line}}</p>
         </ion-card-content>
       </ion-card>
