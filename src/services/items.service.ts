@@ -1,6 +1,18 @@
+import { Subject } from 'rxjs/Subject';
+
 import { Item } from '../models/Item';
+//
+//import * as firebase from 'firebase';
+//import DataSnapshot = firebase.database.DataSnapshot;
+
+
+
+
 
 export class ItemsService {
+
+  books$ = new Subject<Item[]>();
+  disks$ = new Subject<Item[]>();
 
   bookList : Item[] = [
     {
@@ -62,25 +74,36 @@ export class ItemsService {
     }
   ];
 
+  emitBooks() {
+    this.books$.next(this.bookList.slice());
+  }
+
+  emitDisks() {
+    this.disks$.next(this.diskList.slice());
+  }
 
   borrowBook(index: number, borrowerName: string) {
     this.bookList[index].isAvailable = false;
     this.bookList[index].borrowerName = borrowerName;
+    this.emitBooks();
   }
 
   borrowDisk(index: number, borrowerName: string) {
     this.diskList[index].isAvailable = false;
     this.diskList[index].borrowerName = borrowerName;
+    this.emitDisks();
   }
 
   returnBook(index: number) {
     this.bookList[index].isAvailable = true;
     this.bookList[index].borrowerName = '';
+    this.emitBooks();
   }
 
   returnDisk(index: number) {
     this.diskList[index].isAvailable = true;
     this.diskList[index].borrowerName = '';
+    this.emitDisks();
   }
 
 }

@@ -4,6 +4,8 @@ import { MenuController, ModalController } from 'ionic-angular';
 import { Item } from '../../models/Item';
 import { ItemsService } from '../../services/items.service';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { LendCdPage } from '../lend-cd/lend-cd';
 
 @Component({
@@ -12,6 +14,7 @@ import { LendCdPage } from '../lend-cd/lend-cd';
 })
 export class CdListPage {
   diskList : Item[];
+  disksSubscription: Subscription;
 
   constructor(
     private menuCtrl: MenuController,
@@ -19,9 +22,19 @@ export class CdListPage {
     private itemsService: ItemsService
   ){}
 
-  ionViewWillEnter() {
-    this.diskList = this.itemsService.diskList.slice();
+  ngOnInit() {
+    this.disksSubscription = this.itemsService.disks$.subscribe(
+      (disks: Item[]) => {
+        this.diskList = disks.slice();
+      }
+    );
+    this.itemsService.emitDisks();
   }
+
+  ngOnDestroy() {
+    this.disksSubscription.unsubscribe();
+  }
+
 
   onToggleMenu() {
     this.menuCtrl.open();
