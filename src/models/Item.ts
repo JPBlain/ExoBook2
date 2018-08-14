@@ -5,6 +5,6 @@ export class Item {
 
   constructor(public name: string) {
     this.isAvailable = true;
-    borrowerName = '';
+    this.borrowerName = '';
   }
 }

@@ -12,5 +12,18 @@
 </ion-header>
 
 <ion-content padding>
-  Settings List
+  <ion-card>
+      <ion-card-header>Livres</ion-card-header>
+      <ion-card-content>
+          <button ion-button block outline (click)="onSaveBookList()">Enregistrer</button>
+          <button ion-button block outline (click)="onFetchBookList()">Récupérer</button>
+      </ion-card-content>
+  </ion-card>
+  <ion-card>
+      <ion-card-header>Disques</ion-card-header>
+      <ion-card-content>
+          <button ion-button block outline (click)="onSaveDiskList()">Enregistrer</button>
+          <button ion-button block outline (click)="onFetchDiskList()">Récupérer</button>
+      </ion-card-content>
+  </ion-card>
 </ion-content>

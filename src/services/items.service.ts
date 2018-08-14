@@ -1,78 +1,17 @@
 import { Subject } from 'rxjs/Subject';
 
 import { Item } from '../models/Item';
-//
-//import * as firebase from 'firebase';
-//import DataSnapshot = firebase.database.DataSnapshot;
 
-
-
-
+import * as firebase from 'firebase';
+import DataSnapshot = firebase.database.DataSnapshot;
 
 export class ItemsService {
 
   books$ = new Subject<Item[]>();
   disks$ = new Subject<Item[]>();
 
-  bookList : Item[] = [
-    {
-      name: 'Malte week-end',
-      description: [
-        'ISBN: 978-2-06-722734-7',
-        'Collection: LeGuide Vert'
-      ],
-      isAvailable: false,
-      borrowerName: 'Thomas Sue'
-    },
-    {
-      name: 'Les montagnes hallucinées',
-      description: [
-        'ISBN: 2-290-31905-8',
-        'Auteur: HP Lovecraft'
-      ],
-      isAvailable: true,
-      borrowerName: ''
-    },
-    {
-      name: '365 jours de fête',
-      description: [
-        'ISBN: 978-2-01-231249-4',
-        'Auteur: Pippa Middleton'
-      ],
-      isAvailable: true,
-      borrowerName: ''
-    },
-    {
-      name: 'Union Européenne et Droit International',
-      description: [
-        'ISBN: 978-2-233-00665-3',
-        'Auteurs: Myriam Benlolo-Carabot, Ulas Candas, Eglantine Cujo'
-      ],
-      isAvailable: true,
-      borrowerName: ''
-    }
-  ];
-
-  diskList : Item[] = [
-    {
-      name: 'SteamBoy',
-      description: [
-        'Durée: 2h11',
-        'Scénariste: Katsuhiro Ôtomo'
-      ],
-      isAvailable: true,
-      borrowerName: ''
-    },
-    {
-      name: 'Origine',
-      description: [
-        'Durée: 2h30',
-        'Réalisateur: Keiichi Sugiyama'
-      ],
-      isAvailable: false,
-      borrowerName: 'Elodie Dupuy'
-    }
-  ];
+  bookList : Item[] = [];
+  diskList : Item[] = [];
 
   emitBooks() {
     this.books$.next(this.bookList.slice());
@@ -105,6 +44,63 @@ export class ItemsService {
     this.diskList[index].borrowerName = '';
     this.emitDisks();
   }
+
+  saveBookData() {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('books').set(this.bookList).then(
+        (data: DataSnapshot) => {
+          resolve(data);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  saveDiskData() {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('disks').set(this.diskList).then(
+        (data: DataSnapshot) => {
+          resolve(data);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+
+  retrieveBookData() {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('books').once('value').then(
+        (data: DataSnapshot) => {
+          this.bookList = data.val();
+          this.emitBooks();
+          resolve('Liste des livres récupérée avec succès !');
+        }, (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  retrieveDiskData() {
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('disks').once('value').then(
+        (data: DataSnapshot) => {
+          this.diskList = data.val();
+          this.emitDisks();
+          resolve('Liste des disques récupérée avec succès !');
+        }, (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+
 
 }
 
