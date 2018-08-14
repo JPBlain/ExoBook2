@@ -15,6 +15,7 @@ import { LendBookPage } from '../pages/lend-book/lend-book';
 import { LendCdPage } from '../pages/lend-cd/lend-cd';
 
 import { AuthPage } from '../pages/auth/auth';
+import { HomePage } from '../pages/home/home';
 
 import { ItemsService } from '../services/items.service';
 import { AuthService } from '../services/auth.service';
@@ -30,7 +31,8 @@ import { IonicStorageModule } from '@ionic/storage';
     CdListPage,
     LendBookPage,
     LendCdPage,
-    AuthPage
+    AuthPage,
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { IonicStorageModule } from '@ionic/storage';
     CdListPage,
     LendBookPage,
     LendCdPage,
-    AuthPage
+    AuthPage,
+    HomePage
   ],
   providers: [
     StatusBar,

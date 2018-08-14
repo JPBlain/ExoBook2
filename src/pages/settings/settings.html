@@ -15,15 +15,27 @@
   <ion-card>
       <ion-card-header>Livres</ion-card-header>
       <ion-card-content>
-          <button ion-button block outline (click)="onSaveBookList()">Enregistrer</button>
-          <button ion-button block outline (click)="onFetchBookList()">Récupérer</button>
+        <button ion-button block outline icon-left (click)="onSaveBookList()">
+          <ion-icon name="cloud-upload"></ion-icon>
+          Enregistrer
+        </button>
+        <button ion-button block outline icon-left (click)="onFetchBookList()">
+          <ion-icon name="cloud-download"></ion-icon>
+          Récupérer
+        </button>
       </ion-card-content>
   </ion-card>
   <ion-card>
-      <ion-card-header>Disques</ion-card-header>
-      <ion-card-content>
-          <button ion-button block outline (click)="onSaveDiskList()">Enregistrer</button>
-          <button ion-button block outline (click)="onFetchDiskList()">Récupérer</button>
-      </ion-card-content>
+    <ion-card-header>Disques</ion-card-header>
+    <ion-card-content>
+      <button ion-button block outline icon-left (click)="onSaveDiskList()">
+        <ion-icon name="cloud-upload"></ion-icon>
+        Enregistrer
+      </button>
+      <button ion-button block outline icon-left (click)="onFetchDiskList()">
+        <ion-icon name="cloud-download"></ion-icon>
+        Récupérer
+      </button>
+    </ion-card-content>
   </ion-card>
 </ion-content>

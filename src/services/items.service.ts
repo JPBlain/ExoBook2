@@ -1,4 +1,4 @@
-import { OnInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -10,7 +10,7 @@ import DataSnapshot = firebase.database.DataSnapshot;
 import { Storage } from '@ionic/storage';
 
 @Injectable()
-export class ItemsService implements OnInit {
+export class ItemsService {
 
   books$ = new Subject<Item[]>();
   disks$ = new Subject<Item[]>();
@@ -19,11 +19,6 @@ export class ItemsService implements OnInit {
   diskList : Item[] = [];
 
   constructor(private storage: Storage) {}
-
-  ngOnInit() {
-    this.fetchLocal();
-  }
-
 
   emitBooks() {
     this.books$.next(this.bookList.slice());

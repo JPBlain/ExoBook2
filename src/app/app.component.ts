@@ -5,20 +5,22 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
-
 import { AuthPage } from '../pages/auth/auth';
+import { HomePage } from '../pages/home/home';
 
 import * as firebase from 'firebase';
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   tabsPage: any = TabsPage;
   settingsPage: any = SettingsPage;
   authPage: any = AuthPage;
+  homePage: any = HomePage;
 
-  isAuth: boolean;
+  isAuth: boolean = false;
 
   @ViewChild("content") content: NavController;
 
@@ -30,15 +32,12 @@ export class MyApp {
 
     platform.ready().then(() => {
 
-      statusBar.styleDefault();
-      splashScreen.hide();
-
       let config = {
         apiKey: "AIzaSyAh6Mc0iVSM8RjLOet4ITwOxOwlsdyE1lo",
         authDomain: "exobook2.firebaseapp.com",
         databaseURL: "https://exobook2.firebaseio.com",
         projectId: "exobook2",
-        storageBucket: "",
+        storageBucket: "exobook2.appspot.com",
         messagingSenderId: "929610874983"
       };
 
@@ -55,7 +54,11 @@ export class MyApp {
           }
         }
       );
+
+      statusBar.styleDefault();
+      splashScreen.hide();
     });
+
 
   }
 

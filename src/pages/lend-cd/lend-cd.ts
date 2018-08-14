@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController, ToastController } from 'ionic-angular';
 
 import { Item } from '../../models/Item';
 import { ItemsService } from '../../services/items.service';
@@ -16,6 +16,7 @@ export class LendCdPage implements OnInit {
 
   constructor(public navParams: NavParams,
               private viewCtrl: ViewController,
+              private toastCtrl: ToastController,
               private formBuilder: FormBuilder,
               private itemsService: ItemsService) {}
 
@@ -43,7 +44,11 @@ export class LendCdPage implements OnInit {
 
     if (this.disk.isAvailable) {
       if (borrowerName == '') {
-        //
+        this.toastCtrl.create({
+          message: 'indiquer un nom d\'emprunteur est obligatoire',
+          duration: 3000,
+          position: 'bottom'
+        }).present();
       } else {
         this.itemsService.borrowDisk(this.index,borrowerName);
         this.dismissModal();

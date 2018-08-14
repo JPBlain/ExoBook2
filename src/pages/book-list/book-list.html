@@ -23,7 +23,7 @@
           <span ion-text color="danger" *ngIf="!book.isAvailable" >
             <em>emprunté par : {{book.borrowerName}}</em>
           </span>
-          <p *ngFor="let line of book.description">{{line}}</p>
+          <p *ngFor="let line of book.description"> {{line}} </p>
         </ion-card-content>
       </ion-card>
     </button>

@@ -13,7 +13,7 @@
   <ion-card>
     <ion-card-header>{{book.name}}</ion-card-header>
     <ion-card-content>
-      <p *ngFor="let line of book.description">{{line}}</p>
+      <p *ngFor="let line of book.description"> {{line}} </p>
     </ion-card-content>
   </ion-card>
 
@@ -30,17 +30,18 @@
           <button ion-button
             full color="primary" [disabled]="!book.isAvailable"
             (click)="onSubmitForm()">
-            Prêter le livre
+            Prêter
           </button>
         </ion-col>
         <ion-col>
           <button ion-button
             full color="primary" [disabled]="book.isAvailable"
             (click)="onSubmitForm()">
-            Récupérer le livre
+            Récupérer
           </button>
         </ion-col>
       </ion-row>
+       
     </ion-grid>
 
   </form>
