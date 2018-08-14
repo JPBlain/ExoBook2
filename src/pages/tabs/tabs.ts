@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { ItemsService } from '../../services/items.service';
+
 import { BookListPage } from '../book-list/book-list';
 import { CdListPage } from '../cd-list/cd-list';
 
@@ -7,9 +10,15 @@ import { CdListPage } from '../cd-list/cd-list';
   templateUrl: 'tabs.html'
 })
 
-export class TabsPage {
+export class TabsPage implements OnInit {
   bookListPage = BookListPage;
   cdListPage = CdListPage;
+
+  constructor(private itemsService: ItemsService){}
+
+  ngOnInit() {
+    this.itemsService.fetchLocal();
+  }
 }
 
 

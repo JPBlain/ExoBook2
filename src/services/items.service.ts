@@ -1,3 +1,5 @@
+import { OnInit, Injectable } from '@angular/core';
+
 import { Subject } from 'rxjs/Subject';
 
 import { Item } from '../models/Item';
@@ -5,13 +7,23 @@ import { Item } from '../models/Item';
 import * as firebase from 'firebase';
 import DataSnapshot = firebase.database.DataSnapshot;
 
-export class ItemsService {
+import { Storage } from '@ionic/storage';
+
+@Injectable()
+export class ItemsService implements OnInit {
 
   books$ = new Subject<Item[]>();
   disks$ = new Subject<Item[]>();
 
   bookList : Item[] = [];
   diskList : Item[] = [];
+
+  constructor(private storage: Storage) {}
+
+  ngOnInit() {
+    this.fetchLocal();
+  }
+
 
   emitBooks() {
     this.books$.next(this.bookList.slice());
@@ -24,24 +36,28 @@ export class ItemsService {
   borrowBook(index: number, borrowerName: string) {
     this.bookList[index].isAvailable = false;
     this.bookList[index].borrowerName = borrowerName;
+    this.saveLocal();
     this.emitBooks();
   }
 
   borrowDisk(index: number, borrowerName: string) {
     this.diskList[index].isAvailable = false;
     this.diskList[index].borrowerName = borrowerName;
+    this.saveLocal();
     this.emitDisks();
   }
 
   returnBook(index: number) {
     this.bookList[index].isAvailable = true;
     this.bookList[index].borrowerName = '';
+    this.saveLocal();
     this.emitBooks();
   }
 
   returnDisk(index: number) {
     this.diskList[index].isAvailable = true;
     this.diskList[index].borrowerName = '';
+    this.saveLocal();
     this.emitDisks();
   }
 
@@ -77,6 +93,7 @@ export class ItemsService {
       firebase.database().ref('books').once('value').then(
         (data: DataSnapshot) => {
           this.bookList = data.val();
+          this.saveLocal();
           this.emitBooks();
           resolve('Liste des livres récupérée avec succès !');
         }, (error) => {
@@ -91,6 +108,7 @@ export class ItemsService {
       firebase.database().ref('disks').once('value').then(
         (data: DataSnapshot) => {
           this.diskList = data.val();
+          this.saveLocal();
           this.emitDisks();
           resolve('Liste des disques récupérée avec succès !');
         }, (error) => {
@@ -100,7 +118,29 @@ export class ItemsService {
     });
   }
 
+  saveLocal() {
+    this.storage.set('books', this.bookList);
+    this.storage.set('disks', this.diskList);
+  }
 
+  fetchLocal() {
+    this.storage.get('books').then(
+      (list) => {
+        if (list && list.length) {
+          this.bookList = list.slice();
+        }
+        this.emitBooks();
+      }
+    );
+    this.storage.get('disks').then(
+      (list) => {
+        if (list && list.length) {
+          this.diskList = list.slice();
+        }
+        this.emitDisks();
+      }
+    );
+  }
 
 }
 

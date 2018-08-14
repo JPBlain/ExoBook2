@@ -19,6 +19,8 @@ import { AuthPage } from '../pages/auth/auth';
 import { ItemsService } from '../services/items.service';
 import { AuthService } from '../services/auth.service';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -32,6 +34,7 @@ import { AuthService } from '../services/auth.service';
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
