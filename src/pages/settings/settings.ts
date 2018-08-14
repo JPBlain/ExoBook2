@@ -50,6 +50,7 @@ export class SettingsPage {
         content: 'Sauvegarde de la liste des disques en cours…'
       });
       loader.present();
+
       this.itemsService.saveDiskData().then(
         () => {
           loader.dismiss();

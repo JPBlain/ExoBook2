@@ -15,7 +15,7 @@
   <ion-card>
       <ion-card-header>Livres</ion-card-header>
       <ion-card-content>
-        <button ion-button block outline icon-left (click)="onSaveBookList()">
+        <button ion-button block outline icon-left (click)="onSaveBookList()" [disabled]="itemsService.noBookListed()">
           <ion-icon name="cloud-upload"></ion-icon>
           Enregistrer
         </button>
@@ -28,7 +28,7 @@
   <ion-card>
     <ion-card-header>Disques</ion-card-header>
     <ion-card-content>
-      <button ion-button block outline icon-left (click)="onSaveDiskList()">
+      <button ion-button block outline icon-left (click)="onSaveDiskList()" [disabled]="itemsService.noDiskListed()">
         <ion-icon name="cloud-upload"></ion-icon>
         Enregistrer
       </button>

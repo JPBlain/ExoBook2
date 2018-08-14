@@ -20,6 +20,14 @@ export class ItemsService {
 
   constructor(private storage: Storage) {}
 
+  noBookListed () {
+    return (this.bookList.length == 0);
+  }
+
+  noDiskListed () {
+    return (this.diskList.length == 0);
+  }
+
   emitBooks() {
     this.books$.next(this.bookList.slice());
   }
